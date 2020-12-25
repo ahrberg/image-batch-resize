@@ -1,0 +1,19 @@
+.Footer-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.Footer-container span {
+  display: flex;
+  align-items: center;
+  margin-left: 0.2em;
+}
+
+.Footer-container a {
+  display: flex;
+  align-items: center;
+}
+
+.Footer-icon path {
+  fill: var(--disabled);
+}

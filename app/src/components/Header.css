@@ -1,0 +1,19 @@
+.Header-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.Header-container span {
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  margin-left: 0.2em;
+}
+
+.Header-icon path {
+  fill: var(--primary);
+}
+
+.Header-icon-inactive path {
+  fill: var(--disabled);
+}

@@ -1,0 +1,18 @@
+.IconButton {
+  border-radius: 50%;
+  box-sizing: content-box;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.IconButton:hover {
+  border: 2px solid var(--primary);
+}
+
+.IconButton path {
+  fill: var(--primary);
+}
+
+.IconButton-disabled path {
+  fill: var(--disabled);
+}

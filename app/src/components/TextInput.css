@@ -1,0 +1,17 @@
+.TextInput-label {
+  font-size: 0.8rem;
+  display: block;
+  text-align: right;
+}
+
+.TextInput {
+  border: 2px solid var(--primary);
+  border-radius: 5px;
+  padding: 0.5em 1em;
+  width: 60px;
+  text-align: right;
+}
+
+.TextInput-secondary {
+  border-color: var(--secondary);
+}

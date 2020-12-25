@@ -1,0 +1,39 @@
+.App-h1 {
+  color: var(--primary);
+  margin-top: 0em;
+  margin-bottom: 1em;
+  text-align: center;
+}
+
+.App-info {
+  text-align: center;
+}
+
+.App-content {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.App-space-buttons div {
+  display: inline-block;
+  margin-right: 0.5em;
+}
+
+.App-submit {
+  margin-top: 2em;
+  text-align: center;
+}
+
+header {
+  margin: 1em;
+}
+
+section {
+  margin: 0 2em;
+}
+
+footer {
+  margin: 1em;
+}

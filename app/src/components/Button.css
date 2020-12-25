@@ -1,0 +1,35 @@
+.Button {
+  background-color: var(--primary-dark);
+  border: 2px solid var(--primary-dark);
+  color: var(--white);
+  padding: 0.5em 1em;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 6em;
+}
+
+.Button:hover {
+  font-weight: bold;
+}
+
+.Button-wide {
+  width: 12em;
+}
+
+.Button-secondary {
+  background-color: var(--secondary);
+  border-color: var(--secondary);
+  color: var(--white);
+}
+
+.Button-outline {
+  background-color: unset;
+  border-color: var(--primary);
+  color: var(--black);
+}
+
+.Button-outline-secondary {
+  background-color: unset;
+  border-color: var(--secondary);
+  color: var(--black);
+}
