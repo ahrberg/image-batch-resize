@@ -80,7 +80,7 @@ const Info = ({ show, onClose }: InfoProps) => {
             </li>
           </ul>
           <h3>Version</h3>
-          <p>{PackageInfo.version}</p>
+          <p>v{PackageInfo.version}</p>
         </div>
       </div>
     </div>
