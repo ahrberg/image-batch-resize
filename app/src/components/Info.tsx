@@ -2,6 +2,7 @@ import React from "react";
 import IconButton from "./IconButton";
 import { ReactComponent as CloseIcon } from "../icons/close-circle-line.svg";
 import "./Info.css";
+import PackageInfo from "../../package.json";
 
 type InfoProps = {
   onClose: () => void;
@@ -78,6 +79,8 @@ const Info = ({ show, onClose }: InfoProps) => {
               </a>
             </li>
           </ul>
+          <h3>Version</h3>
+          <p>{PackageInfo.version}</p>
         </div>
       </div>
     </div>
