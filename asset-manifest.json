@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/image-batch-resize/static/css/main.04ffb01b.chunk.css",
-    "main.js": "/image-batch-resize/static/js/main.934bfe30.chunk.js",
-    "main.js.map": "/image-batch-resize/static/js/main.934bfe30.chunk.js.map",
+    "main.css": "/image-batch-resize/static/css/main.91cbaff3.chunk.css",
+    "main.js": "/image-batch-resize/static/js/main.fcc714b5.chunk.js",
+    "main.js.map": "/image-batch-resize/static/js/main.fcc714b5.chunk.js.map",
     "runtime-main.js": "/image-batch-resize/static/js/runtime-main.929b43fd.js",
     "runtime-main.js.map": "/image-batch-resize/static/js/runtime-main.929b43fd.js.map",
     "static/css/2.679831fc.chunk.css": "/image-batch-resize/static/css/2.679831fc.chunk.css",
@@ -12,7 +12,7 @@
     "static/js/3.25dddf6b.chunk.js.map": "/image-batch-resize/static/js/3.25dddf6b.chunk.js.map",
     "index.html": "/image-batch-resize/index.html",
     "static/css/2.679831fc.chunk.css.map": "/image-batch-resize/static/css/2.679831fc.chunk.css.map",
-    "static/css/main.04ffb01b.chunk.css.map": "/image-batch-resize/static/css/main.04ffb01b.chunk.css.map",
+    "static/css/main.91cbaff3.chunk.css.map": "/image-batch-resize/static/css/main.91cbaff3.chunk.css.map",
     "static/js/2.c2f81a9a.chunk.js.LICENSE.txt": "/image-batch-resize/static/js/2.c2f81a9a.chunk.js.LICENSE.txt",
     "static/media/close-circle-line.ddc24fcf.svg": "/image-batch-resize/static/media/close-circle-line.ddc24fcf.svg",
     "static/media/delete-bin-line.234f562f.svg": "/image-batch-resize/static/media/delete-bin-line.234f562f.svg",
@@ -24,7 +24,7 @@
     "static/js/runtime-main.929b43fd.js",
     "static/css/2.679831fc.chunk.css",
     "static/js/2.c2f81a9a.chunk.js",
-    "static/css/main.04ffb01b.chunk.css",
-    "static/js/main.934bfe30.chunk.js"
+    "static/css/main.91cbaff3.chunk.css",
+    "static/js/main.fcc714b5.chunk.js"
   ]
 }
