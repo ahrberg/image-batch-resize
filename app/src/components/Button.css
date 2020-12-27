@@ -19,17 +19,14 @@
 .Button-secondary {
   background-color: var(--secondary);
   border-color: var(--secondary);
-  color: var(--white);
 }
 
 .Button-outline {
   background-color: unset;
   border-color: var(--primary);
-  color: var(--black);
 }
 
 .Button-outline-secondary {
   background-color: unset;
   border-color: var(--secondary);
-  color: var(--black);
 }

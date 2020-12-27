@@ -1,5 +1,6 @@
 .Paper {
-  box-shadow: 0 0 2px 2px var(--primary);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  background-color: var(--surface);
   display: inline-block;
-  border-radius: 0.8em;
+  border-radius: 0.5em;
 }
