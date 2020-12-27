@@ -9,7 +9,7 @@ import Section from "./components/Section";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Info from "./components/Info";
-import { Small, Medium, Large } from "./config";
+import { Small, Medium, Large, AcceptedFileTypes } from "./config";
 import { resize } from "./utils";
 
 import "./App.css";
@@ -22,7 +22,10 @@ function App() {
   const [showInfo, setShowInfo] = useState(false);
 
   const handleOnDrop = useCallback(async (acceptedFiles: File[]) => {
-    setFiles((files) => [...files, ...acceptedFiles]);
+    const haveAcceptedFileType = acceptedFiles.filter((f) =>
+      AcceptedFileTypes.includes(f.type)
+    );
+    setFiles((files) => [...files, ...haveAcceptedFileType]);
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

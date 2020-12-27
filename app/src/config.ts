@@ -14,3 +14,5 @@ export const Large: OutputOption = {
   maxSize: 1024,
   fileNameSiffix: "_l",
 };
+
+export const AcceptedFileTypes = ["image/webp", "image/jpeg", "image/png"];

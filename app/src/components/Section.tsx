@@ -7,7 +7,7 @@ type SectionProps = {
 const Section: React.FC<SectionProps> = ({ title, children }) => {
   return (
     <div>
-      <text>{title}</text>
+      <h2>{title}</h2>
       {children}
     </div>
   );
