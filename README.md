@@ -12,7 +12,7 @@ Please open a pull request or create an issue to jump on in.
 
 ## TODO
 
-- [ ] Add progress bar
+- [x] Add progress bar
 - [ ] Select output file type, png, webp, jpeg
 - [ ] Make responsive and mobile friendly
 - [ ] Improve drop zone to entire screen

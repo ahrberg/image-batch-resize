@@ -9,8 +9,9 @@ import Section from "./components/Section";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Info from "./components/Info";
+import Progress from "./components/Progress";
 import { Small, Medium, Large, AcceptedFileTypes } from "./config";
-import { resize } from "./utils";
+import { resizeAndArchive } from "./utils";
 
 import "./App.css";
 
@@ -20,6 +21,8 @@ function App() {
   const [options, setOptions] = useState<OutputOption[]>([]);
   const [customSize, setCustomSize] = useState<string>("");
   const [showInfo, setShowInfo] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [running, setRunning] = useState(false);
 
   const handleOnDrop = useCallback(async (acceptedFiles: File[]) => {
     const haveAcceptedFileType = acceptedFiles.filter((f) =>
@@ -32,9 +35,21 @@ function App() {
     onDrop: handleOnDrop,
   });
 
-  const handleResize = () => {
+  const handleProgress = (percent: number) => {
+    setProgress(percent);
+  };
+
+  const handleResize = async () => {
     if (files.length && options.length) {
-      resize(files, options);
+      setRunning(true);
+      try {
+        await resizeAndArchive(files, options, handleProgress);
+      } catch (error) {
+        console.error("Error in handle resize", error);
+      } finally {
+        setRunning(false);
+        setProgress(0);
+      }
     }
   };
 
@@ -70,6 +85,7 @@ function App() {
   return (
     <div className="App-content">
       <Paper>
+        {running && <Progress percent={progress} />}
         <Info show={showInfo} onClose={() => setShowInfo(false)} />
         <header>
           <Header count={files.length} onReset={handleReset} />
@@ -113,7 +129,7 @@ function App() {
             <Button
               text="Resize"
               size="wide"
-              disabled={false}
+              disabled={running}
               variant="solid"
               onClick={handleResize}
               color="primary"
