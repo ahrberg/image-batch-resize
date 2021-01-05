@@ -2,8 +2,13 @@ import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import Reducer from "image-blob-reduce";
 import { OutputOption } from "./types";
+import Pica from "pica";
 
-const reducer = Reducer();
+// Add pica as option to image-blob-reduce with default setting since
+// image-blob-reduce imports/require pica conditionally and is not
+// bundled with webpack
+const pica = Pica();
+const reducer = Reducer({ pica });
 
 interface Metadata {
   percent: number;
