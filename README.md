@@ -13,8 +13,9 @@ Please open a pull request or create an issue to jump on in.
 ## TODO
 
 - [x] Add progress bar
-- [ ] Select output file type, png, webp, jpeg
+- [x] Select output file type, png, webp, jpeg
 - [ ] Make responsive and mobile friendly
 - [ ] Improve drop zone to entire screen
 - [ ] Show error messages
 - [ ] Add app ico and app icons
+- [ ] Add quality option
