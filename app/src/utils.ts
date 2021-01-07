@@ -1,7 +1,7 @@
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import Reducer from "image-blob-reduce";
-import { OutputOption } from "./types";
+import { FileType, OutputOption } from "./types";
 import Pica from "pica";
 
 // Add pica as option to image-blob-reduce with default setting since
@@ -17,17 +17,47 @@ interface Metadata {
 
 type OnProgressCallback = (metadata: Metadata) => void;
 
-export const resizeFile = async (
-  file: File,
-  maxSize: number,
-  suffix?: string
+export const resizeAndConvertFile = async (
+  blob: Blob,
+  size: number,
+  fileType?: FileType,
+  quality?: number
 ) => {
-  const newBlob = await reducer.toBlob(file, { max: maxSize });
-  const fileName = suffix
-    ? file.name.replace(/(\.[\w\d_-]+)$/i, `${suffix}$1`)
-    : file.name;
+  const canvas = await reducer.toCanvas(blob, { max: size });
 
-  return new File([newBlob], fileName);
+  return new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(
+      (blob) => {
+        if (blob) {
+          return resolve(blob);
+        } else {
+          reject("No blob returned");
+        }
+      },
+      fileType,
+      quality
+    );
+  });
+};
+
+const createFile = (
+  blob: Blob,
+  fileName: string,
+  suffix: string,
+  fileType?: FileType
+) => {
+  let newFileName = suffix
+    ? fileName.replace(/(\.[\w\d_-]+)$/i, `${suffix}$1`)
+    : fileName;
+
+  if (fileType) {
+    newFileName =
+      newFileName.substr(0, newFileName.lastIndexOf(".")) +
+      "." +
+      fileType.split("/")[1];
+  }
+
+  return new File([blob], newFileName);
 };
 
 export const saveFilesAsZip = async (
@@ -57,23 +87,33 @@ const ProgressConfig = {
 
 const resize = async (
   files: File[],
-  outputOptions: OutputOption[],
+  outputOptions: OutputOption,
   onUpdate: OnProgressCallback
 ) => {
   let outputFiles: File[] = [];
 
+  interface Options {
+    fileType?: FileType;
+    quality?: number;
+    maxSize: number;
+    fileNameSiffix: string;
+  }
+
   const allFilesWithSize: {
     file: File;
-    maxSize: number;
-    suffix?: string;
+    options: Options;
   }[] = [];
 
   files.forEach((f) =>
-    outputOptions.forEach((o) =>
+    outputOptions.sizes.forEach((o) =>
       allFilesWithSize.push({
         file: f,
-        maxSize: o.maxSize,
-        suffix: o.fileNameSiffix,
+        options: {
+          fileNameSiffix: o.fileNameSiffix,
+          maxSize: o.maxSize,
+          fileType: outputOptions.fileType,
+          quality: outputOptions.quality,
+        },
       })
     )
   );
@@ -81,9 +121,27 @@ const resize = async (
   let percent = 0;
 
   for (const file of allFilesWithSize) {
-    const resized = await resizeFile(file.file, file.maxSize, file.suffix);
+    let blob: Blob = new Blob();
 
-    outputFiles = [...outputFiles, resized];
+    if (file.options.fileType) {
+      blob = await resizeAndConvertFile(
+        file.file,
+        file.options.maxSize,
+        file.options.fileType,
+        file.options.quality
+      );
+    } else {
+      blob = await reducer.toBlob(file.file, { max: file.options.maxSize });
+    }
+
+    const newFile = createFile(
+      blob,
+      file.file.name,
+      file.options.fileNameSiffix,
+      file.options.fileType
+    );
+
+    outputFiles = [...outputFiles, newFile];
     percent += 100 / allFilesWithSize.length;
     onUpdate({ percent, currentFile: file.file.name });
   }
@@ -93,7 +151,7 @@ const resize = async (
 
 export const resizeAndArchive = async (
   files: File[],
-  outputOptions: OutputOption[],
+  outputOptions: OutputOption,
   onProgress: (percent: number) => void
 ) => {
   const handleProgress = (type: "resize" | "archive") => (
