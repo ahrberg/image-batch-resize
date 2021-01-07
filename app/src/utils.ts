@@ -20,24 +20,11 @@ type OnProgressCallback = (metadata: Metadata) => void;
 export const resizeAndConvertFile = async (
   blob: Blob,
   size: number,
-  fileType?: FileType,
+  fileType: FileType,
   quality?: number
 ) => {
   const canvas = await reducer.toCanvas(blob, { max: size });
-
-  return new Promise<Blob>((resolve, reject) => {
-    canvas.toBlob(
-      (blob) => {
-        if (blob) {
-          return resolve(blob);
-        } else {
-          reject("No blob returned");
-        }
-      },
-      fileType,
-      quality
-    );
-  });
+  return pica.toBlob(canvas, fileType as string, quality);
 };
 
 const createFile = (
