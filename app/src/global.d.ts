@@ -14,6 +14,7 @@ declare module "image-blob-reduce" {
 
   interface IImageBlobReduce {
     toBlob: (blob: Blob, options: IBlobOptions) => Promise<Blob>;
+    toCanvas: (blob: Blob, options: IBlobOptions) => Promise<HTMLCanvasElement>;
   }
 
   function ImageBlobReduce(options?: IOptions): IImageBlobReduce;

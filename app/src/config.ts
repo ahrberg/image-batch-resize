@@ -1,16 +1,16 @@
-import { OutputOption } from "./types";
+import { SizeOption } from "./types";
 
-export const Small: OutputOption = {
+export const Small: SizeOption = {
   maxSize: 240,
   fileNameSiffix: "_s",
 };
 
-export const Medium: OutputOption = {
+export const Medium: SizeOption = {
   maxSize: 500,
   fileNameSiffix: "_m",
 };
 
-export const Large: OutputOption = {
+export const Large: SizeOption = {
   maxSize: 1024,
   fileNameSiffix: "_l",
 };

@@ -1,20 +1,22 @@
-import React, { useState } from "react";
-import { OutputOption } from "../types";
+import React from "react";
+import { SizeOption } from "../types";
 import Button from "./Button";
 
 type OptionButtonProps = {
   text: string;
-  onChange: (selected: boolean, option: OutputOption) => void;
-  option: OutputOption;
+  onChange: (option: SizeOption) => void;
+  option: SizeOption;
+  selected: boolean;
 };
 
-const OptionButton = ({ text, onChange, option }: OptionButtonProps) => {
-  const [selected, setSelected] = useState(false);
+const OptionButton = ({
+  text,
+  onChange,
+  option,
+  selected,
+}: OptionButtonProps) => {
   const handleClick = () => {
-    setSelected((s) => {
-      onChange(!s, option);
-      return !s;
-    });
+    onChange(option);
   };
 
   return (

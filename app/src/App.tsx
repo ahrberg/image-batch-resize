@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { OutputOption } from "./types";
 import OptionButton from "./components/OptionButton";
 import Paper from "./components/Paper";
 import Button from "./components/Button";
@@ -10,15 +9,17 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Info from "./components/Info";
 import Progress from "./components/Progress";
+import ButtonGroup from "./components/ButtonGroup";
 import { Small, Medium, Large, AcceptedFileTypes } from "./config";
 import { resizeAndArchive } from "./utils";
+import { FileType, OutputOption, SizeOption } from "./types";
 
 import "./App.css";
 
 function App() {
   // App states
   const [files, setFiles] = useState<File[]>([]);
-  const [options, setOptions] = useState<OutputOption[]>([]);
+  const [options, setOptions] = useState<OutputOption>({ sizes: [] });
   const [customSize, setCustomSize] = useState<string>("");
   const [showInfo, setShowInfo] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -40,7 +41,7 @@ function App() {
   };
 
   const handleResize = async () => {
-    if (files.length && options.length) {
+    if (files.length && options.sizes.length) {
       setRunning(true);
       try {
         await resizeAndArchive(files, options, handleProgress);
@@ -53,12 +54,17 @@ function App() {
     }
   };
 
-  const handleOptionChanged = (selected: boolean, option: OutputOption) => {
-    if (selected) {
-      setOptions((o) => [...o, option]);
-    } else {
-      setOptions((o) => o.filter((i) => i.maxSize !== option.maxSize));
-    }
+  const handleOptionChanged = (option: SizeOption) => {
+    setOptions((o) => {
+      if (o.sizes.find((f) => f.maxSize === option.maxSize)) {
+        return {
+          ...o,
+          sizes: o.sizes.filter((s) => s.maxSize !== option.maxSize),
+        };
+      } else {
+        return { ...o, sizes: [...o.sizes, option] };
+      }
+    });
   };
 
   const handleReset = () => {
@@ -71,15 +77,25 @@ function App() {
     const sizeInput = event.target.value;
     const size = (sizeInput.match("[0-9]*") || []).join("");
     setCustomSize(size);
-    setOptions((old) => {
-      const updated = old.filter((o) => !o.custom);
-      updated.push({
-        custom: true,
-        fileNameSiffix: `_${size}`,
-        maxSize: parseInt(size),
-      });
-      return updated;
+    setOptions((o) => {
+      const newOptions = {
+        ...o,
+        sizes: [...o.sizes.filter((f) => !f.custom)],
+      };
+
+      if (size) {
+        newOptions.sizes.push({
+          fileNameSiffix: `_${size}`,
+          maxSize: parseInt(size),
+          custom: true,
+        });
+      }
+      return newOptions;
     });
+  };
+
+  const handleFileTypeChanged = (type: string | undefined) => {
+    setOptions((o) => ({ ...o, fileType: type as FileType | undefined }));
   };
 
   return (
@@ -101,27 +117,55 @@ function App() {
               {isDragActive ? <p>Drop!</p> : <p>or drop them here...</p>}
             </div>
           </div>
-          <Section title="Sizes">
+          <Section title="Sizes *">
             <div className="InlineGroup App-space-buttons">
               <OptionButton
                 onChange={handleOptionChanged}
                 option={Small}
                 text="Small"
+                selected={
+                  options.sizes.find((o) => o.maxSize === Small.maxSize)
+                    ? true
+                    : false
+                }
               />
               <OptionButton
                 onChange={handleOptionChanged}
                 option={Medium}
                 text="Medium"
+                selected={
+                  options.sizes.find((o) => o.maxSize === Medium.maxSize)
+                    ? true
+                    : false
+                }
               />
               <OptionButton
                 onChange={handleOptionChanged}
                 option={Large}
                 text="Large"
+                selected={
+                  options.sizes.find((o) => o.maxSize === Large.maxSize)
+                    ? true
+                    : false
+                }
               />
               <TextInput
                 onChange={handleCustomSizeChanged}
                 value={customSize}
                 color="secondary"
+              />
+            </div>
+          </Section>
+          <Section title="File type">
+            <div className="InlineGroup App-space-buttons">
+              <ButtonGroup
+                items={[
+                  { id: FileType.WEBP, text: "WebP" },
+                  { id: FileType.JPEG, text: "Jpeg" },
+                  { id: FileType.PNG, text: "Png" },
+                ]}
+                selectedChanged={handleFileTypeChanged}
+                selectedId={options.fileType}
               />
             </div>
           </Section>
